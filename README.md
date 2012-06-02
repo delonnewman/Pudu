@@ -63,7 +63,7 @@
 - clean
 
 Removes all keywords from from the given namespace.
-It's used internally by L<Encapsulated::Object>.
+It's used internally by `Encapsulated::Object`.
 
 Example:
 
@@ -206,4 +206,4 @@ Delon Newman <delon@cpan.org>
 
 # SEE ALSO
 
-L<Moose>, L<Mouse>, L<Moo>, L<Mo>, L<Class::Closure>, L<Devel::EnforceEncapsulation>
+`Moose`, `Mouse`, `Moo`, `Mo`, `Class::Closure`, `Devel::EnforceEncapsulation`

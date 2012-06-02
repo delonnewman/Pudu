@@ -96,7 +96,7 @@ package Encapsulated {
 =item clean
 
 Removes all keywords from from the given namespace.
-It's used internally by L<Encapsulated::Object>.
+It's used internally by C<Encapsulated::Object>.
 
 Example:
 
@@ -373,6 +373,6 @@ Delon Newman <delon@cpan.org>
 
 =head1 SEE ALSO
 
-L<Moose>, L<Mouse>, L<Moo>, L<Mo>, L<Class::Closure>, L<Devel::EnforceEncapsulation>
+C<Moose>, C<Mouse>, C<Moo>, C<Mo>, C<Class::Closure>, C<Devel::EnforceEncapsulation>
 
 =end
