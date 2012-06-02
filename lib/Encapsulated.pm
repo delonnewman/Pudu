@@ -1,10 +1,10 @@
 use v5.14;
 
-# ABSTRACT: Create idomatic, Modern Perl objects with complete encapsulation
+# ABSTRACT: Create idiomatic, modern Perl objects with complete encapsulation
 
 =head1 NAME
 
-    Encapsulated - Create idiomatic, Modern Perl objects with complete encapsulation
+    Encapsulated - Create idiomatic, modern Perl objects with complete encapsulation
 
 =head1 SYNOPSIS
 
