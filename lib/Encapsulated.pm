@@ -373,6 +373,6 @@ Delon Newman <delon@cpan.org>
 
 =head1 SEE ALSO
 
-L<Moose>, L<Mouse>, L<Moo>, L<Mo>, L<Class::Closure>
+L<Moose>, L<Mouse>, L<Moo>, L<Mo>, L<Class::Closure>, L<Devel::EnforceEncapsulation>
 
 =end
