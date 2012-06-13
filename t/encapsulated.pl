@@ -61,7 +61,7 @@ use Data::Dump qw{ dump };
 use lib qw{ lib };
 
 package Animal {
-    use Encapsulated;
+    use Pudu;
 
     has name => ( is => 'rw' );
 
@@ -83,7 +83,7 @@ package Animal {
 }
 
 package Cat {
-    use Encapsulated;
+    use Pudu;
     is 'Animal';
 
     method meow => sub {

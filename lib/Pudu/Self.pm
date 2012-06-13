@@ -1,6 +1,6 @@
 use v5.14;
 
-package Encapsulated::Self {
+package Pudu::Self {
     use Carp;
     use Data::Dump qw{ dump };
 
@@ -47,7 +47,7 @@ __END__
 
 =head1 NAME
 
-Encapsulated::Self - A magic object that helps to provide a 'self' keyword that respects privacy
+Pudu::Self - A magic object that helps to provide a 'self' keyword that respects privacy
 
 =head1 SYNOPSIS
 

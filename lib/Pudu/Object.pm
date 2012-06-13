@@ -1,28 +1,38 @@
-use Encapsulated;
+use Pudu;
 
-package Encapsulated::Object {
+package Pudu::Object {
     use Carp;
+    use Data::Dump qw{ dump };
 
     sub new {
         my ($class, %args) = @_;
         my $obj = \%args;
         
         # remove syntactic sugar from Encapsulated module
-        Encapsulated::clean($class);
+        Pudu::clean($class); # FIXME: There's a better way to do this
 
         bless sub {
-            my ($attr, $value, $props) = @_;
+            my ($attr, $value) = @_;
 
-            if ( $props && $props->{is} && $props->{is} eq 'ro' ) {
+#            dump scalar caller(0);
+#            dump $attr;
+#            dump $value;
+
+            my %attrs = %{"${class}::ATTRIBUTES"};
+            my %props = %{$attrs{$attr}};
+#            dump %attrs;
+#            dump %props;
+
+            if ( %props && $props{is} && $props{is} eq 'ro' ) {
                 if ( $attr && $value ) {
-                    carp "'$attr' is read-only";
+                    croak "'$attr' is read-only";
                 }
             }
 
             if    ( $attr && $value ) { $obj->{$attr} = $value }
             elsif ( $attr )           { $obj->{$attr} }
             else {
-                carp "an attribute is required";
+                croak "an attribute is required";
             }
 
         }, $class;

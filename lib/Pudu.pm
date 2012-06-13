@@ -1,15 +1,15 @@
 use v5.14;
 
-# ABSTRACT: Create idiomatic, modern Perl objects with complete encapsulation
+# ABSTRACT: A light-weight Moose-like object system that makes it easy to create encapsulated, immutable objects
 
 =head1 NAME
 
-    Encapsulated - Create idiomatic, modern Perl objects with complete encapsulation
+    Pudu - A light-weight Moose-like object system that makes it easy to create encapsulated, immutable objects
 
 =head1 SYNOPSIS
 
     package Animal {
-        use Encapsulated;
+        use Pudu;
 
         has name => ( is => 'rw' );
 
@@ -31,7 +31,7 @@ use v5.14;
     }
 
     package Cat {
-        use Encapsulated;
+        use Pudu;
         is 'Animal';
 
         method speak => sub {
@@ -59,9 +59,9 @@ use v5.14;
 
 =cut
 
-use Encapsulated::Self;
+use Pudu::Self;
 
-package Encapsulated {
+package Pudu {
     use Data::Dump qw{ dump };
 
     my @current_scope = ();
@@ -79,10 +79,14 @@ package Encapsulated {
 
         no strict;
 
+        # export keywords
         *{"${caller}::$_"} = \&{$_} for @exports;
 
-        require Encapsulated::Object;
-        push @{"${caller}::ISA"}, 'Encapsulated::Object';
+        require Pudu::Object;
+        push @{"${caller}::ISA"}, 'Pudu::Object';
+
+        *{"${caller}::ATTRIBUTES"}{HASH}; # create ATTRIBUTES namespace
+        *{"${caller}::METHODS"}{HASH};    # create METHODS namespace
 
         use strict;
     }
@@ -101,6 +105,8 @@ It's used internally by C<Encapsulated::Object>.
 Example:
 
     package Cat {
+        use Pudu;
+
         has name => ( is => 'rw' );
 
         method speak => sub {
@@ -139,7 +145,7 @@ Keyword for defining attributes
 Example:
 
     package Point {
-        use Encapsulation;
+        use Pudu;
 
         has x => ( is => 'rw' );
         has y => ( is => 'rw' );
@@ -151,12 +157,17 @@ Example:
         my ($attr, %props) = @_; 
         my $class = caller(0);
 
+        $props{is} ||= 'ro'; # make read-only by default
+
         no strict 'refs';
 
         *{"${class}::$attr"} = sub {
             my ($self, $val) = @_;
-            $self->($attr, $val, \%props);
+            dump $self;
+            $self->($attr, $val);
         };
+
+        *{"${class}::ATTRIBUTES"}->{$attr} = \%props;
 
         use strict 'refs';
     }
@@ -168,7 +179,7 @@ Keyword for recursively refering to the current object
 Example:
 
     package Cat {
-        use Encapsulation;
+        use Pudu;
 
         has name => ( is => 'ro' );
 
@@ -197,7 +208,7 @@ a child class and it's parents.
 Example:
 
     package Point3D {
-        use Encapsulated;
+        use Pudu;
         is 'Point';
     }
 
@@ -216,7 +227,7 @@ Example:
         use strict;
 
         # reset self
-        $self = Encapsulated::Self->new(
+        $self = Pudu::Self->new(
             $caller => (
                 protected => $scopes{protected},
                 private   => {}
@@ -234,7 +245,7 @@ NOTE: this does not work yet
 Example:
 
     package LazyList {
-        use Encapsulated;
+        use Pudu;
         does 'Enumerable';
     }
 
@@ -251,6 +262,8 @@ Keyword for designating a private scope
 Example:
 
     package Cat {
+        use Pudu;
+
         private {
             method hide => sub {
                 "hidden"
@@ -275,7 +288,7 @@ Keyword for designating a protected scope
 Example:
 
     package Animal {
-        use Encapsulated;
+        use Pudu;
 
         protected {
             method share => sub {
@@ -285,7 +298,7 @@ Example:
     }
 
     package Cat {
-        use Encapsulated;
+        use Pudu;
         is 'Animal';
 
         method reveal => sub {
@@ -311,7 +324,7 @@ Keyword for defining a method
 Example:
 
     package Dog {
-        use Encapsulated;
+        use Pudu;
 
         method speak => sub {
             "bark"
@@ -322,14 +335,18 @@ Example:
 
     # define a method
     sub method($&) {
+        my ($name, $blk) = @_;
         my $caller = caller(0);
         $scopes{method} //= {};
+
+        # add to METHOD namespace
+        no strict 'refs';
+        *{"${caller}::METHODS"}->{$name} = {}; # not sure what information add
+        use strict 'refs';
 
         my $scope = shift @current_scope;
 
         unshift @current_scope, 'method';
-
-        my ($name, $blk) = @_;
 
         given ($scope) {
             when ( 'private' ) {
