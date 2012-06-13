@@ -163,7 +163,7 @@ Example:
 
         *{"${class}::$attr"} = sub {
             my ($self, $val) = @_;
-            dump $self;
+            #dump $self;
             $self->($attr, $val);
         };
 
