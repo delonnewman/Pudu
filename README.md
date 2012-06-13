@@ -3,12 +3,12 @@
 
 # NAME
 
-    Encapsulated - Create idiomatic, modern Perl objects with complete encapsulation
+    Pudu - A light-weight Moose-like object system that makes it easy to create encapsulated, immutable objects
 
 # SYNOPSIS
 
     package Animal {
-        use Encapsulated;
+        use Pudu;
 
         has name => ( is => 'rw' );
 
@@ -30,7 +30,7 @@
     }
 
     package Cat {
-        use Encapsulated;
+        use Pudu;
         is 'Animal';
 
         method speak => sub {
@@ -68,6 +68,8 @@ It's used internally by `Encapsulated::Object`.
 Example:
 
     package Cat {
+        use Pudu;
+
         has name => ( is => 'rw' );
 
         method speak => sub {
@@ -94,7 +96,7 @@ Keyword for defining attributes
 Example:
 
     package Point {
-        use Encapsulation;
+        use Pudu;
 
         has x => ( is => 'rw' );
         has y => ( is => 'rw' );
@@ -107,7 +109,7 @@ Keyword for recursively refering to the current object
 Example:
 
     package Cat {
-        use Encapsulation;
+        use Pudu;
 
         has name => ( is => 'ro' );
 
@@ -124,7 +126,7 @@ a child class and it's parents.
 Example:
 
     package Point3D {
-        use Encapsulated;
+        use Pudu;
         is 'Point';
     }
 
@@ -138,7 +140,7 @@ NOTE: this does not work yet
 Example:
 
     package LazyList {
-        use Encapsulated;
+        use Pudu;
         does 'Enumerable';
     }
 
@@ -149,6 +151,8 @@ Keyword for designating a private scope
 Example:
 
     package Cat {
+        use Pudu;
+
         private {
             method hide => sub {
                 "hidden"
@@ -165,7 +169,7 @@ Keyword for designating a protected scope
 Example:
 
     package Animal {
-        use Encapsulated;
+        use Pudu;
 
         protected {
             method share => sub {
@@ -175,7 +179,7 @@ Example:
     }
 
     package Cat {
-        use Encapsulated;
+        use Pudu;
         is 'Animal';
 
         method reveal => sub {
@@ -193,7 +197,7 @@ Keyword for defining a method
 Example:
 
     package Dog {
-        use Encapsulated;
+        use Pudu;
 
         method speak => sub {
             "bark"
