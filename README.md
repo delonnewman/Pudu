@@ -63,7 +63,7 @@
 - clean
 
 Removes all keywords from from the given namespace.
-It's used internally by `Encapsulated::Object`.
+It's used internally by `Pudu::Object`.
 
 Example:
 
@@ -86,7 +86,7 @@ Example:
 ## KEYWORDS
 
 The following functions are all exported by default when using
-the `Encapsulated` module, and are designed to provide some
+the `Pudu` module, and are designed to provide some
 syntactic sugar for the inner workings.
 
 - has
