@@ -100,7 +100,7 @@ package Pudu {
 =item clean
 
 Removes all keywords from from the given namespace.
-It's used internally by C<Encapsulated::Object>.
+It's used internally by C<Pudu::Object>.
 
 Example:
 
@@ -133,7 +133,7 @@ Example:
 =head2 KEYWORDS
 
 The following functions are all exported by default when using
-the C<Encapsulated> module, and are designed to provide some
+the C<Pudu> module, and are designed to provide some
 syntactic sugar for the inner workings.
 
 =over

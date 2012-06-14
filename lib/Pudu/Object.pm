@@ -45,7 +45,7 @@ __END__
 
 =head1 NAME
 
-Encapsulated::Object - An encapsulated closure-based object
+Pudu::Object - An encapsulated closure-based object
 
 =head1 SYNOPSIS
 
